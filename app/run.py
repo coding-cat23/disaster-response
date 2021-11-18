@@ -1,6 +1,7 @@
 import json
 import plotly
 import pandas as pd
+import string
 
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
@@ -8,7 +9,7 @@ from nltk.tokenize import word_tokenize
 from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
-from sklearn.externals import joblib
+import joblib
 from sqlalchemy import create_engine
 
 
@@ -30,7 +31,7 @@ engine = create_engine('sqlite:///../DisasterResponse.db')
 df = pd.read_sql_table('messages', engine)
 
 # load model
-model = joblib.load("../models/disaster_response_message_classifier.pkl")
+model = joblib.load("../models/distaster_response_message_classifier.pkl")
 
 
 # index webpage displays cool visuals and receives user input text for model
@@ -40,8 +41,22 @@ def index():
     
     # extract data needed for visuals
     # TODO: Below is an example - modify to extract data for your own visuals
+    #Group by genre
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
+
+    #Top 5 categories of messages
+    message_counts = df.iloc[:, 4:] != 0
+    top_5_categories=message_counts.sum().sort_values(ascending=False)[0:5].index
+    top_5_counts=message_counts.sum().sort_values(ascending=False)[0:5].values
+
+    #Bottom 5 categories of Messages #Top 5 categories of messages
+    bottom_5_categories=message_counts.sum().sort_values(ascending=True)[0:5].index
+    bottom_5_counts=message_counts.sum().sort_values(ascending=True)[0:5].values
+
+
+
+
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -61,6 +76,44 @@ def index():
                 },
                 'xaxis': {
                     'title': "Genre"
+                }
+            }
+        },
+        {
+            'data': [
+                Bar(
+                    x=top_5_categories,
+                    y=top_5_counts
+               
+                    
+                )
+            ],
+
+            'layout': {
+                'title': 'Count Of Messages By Top 5 Categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Category"
+                }
+            }
+        },
+        {
+            'data': [
+                Bar(
+                    x=bottom_5_categories,
+                    y=bottom_5_counts
+                )
+            ],
+
+            'layout': {
+                'title': 'Count Of Messages By Bottom 5 Categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Category"
                 }
             }
         }
