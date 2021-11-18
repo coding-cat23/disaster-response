@@ -1,0 +1,48 @@
+# Disaster Respose ML Pipeline
+
+## Table Of Contents
+1. Installation
+2. Introduction
+3. Project Details
+4. Instructions
+
+## Installation
+The libraries used in this project are
+- pandas
+- re
+- json
+- sklearn
+- nltk
+- sqlalchemy
+- pickle
+- plotly
+- json
+- flask
+
+The above libraries can be downloaded using Anaconda. Code runs in Python v 3.*
+
+## Introduction
+This project has been completed as part of the Udacity Data Scientist Nanodegree. The datasets have been supplied by Figure Eight. The model is a text classifier that takes a text message received during a disaster, and classifies the message into a category. This is deployed through a web app that can be run in the browser and also contains high-level visuals of the data,
+
+## Project Details
+### ETL Pipeline
+#### process_data.py
+Load and transform message and category datasets
+Stores transformed data in in a SQLite database, which is use to train the ML model
+
+### ML Pipeline
+#### train_classifier.py
+Builds and trains a machine learning pipeline to classify text messages
+Fine tunes ML model parameters using GridSearch
+Model is saved as .pkl file
+
+### Web App
+Deployed using Flask
+Visualises data using plotly
+User  can enter a message that is classified by ML model and category is then output
+
+## Instructions
+In the directory disaster-response\app , run the follwing command: 'python run.py'
+You should see an output: '* Running on http://0.0.0.0:3001/ (Press CTRL+C to quit)'
+Type 'localhost:3001/' into your web browser bar
+
