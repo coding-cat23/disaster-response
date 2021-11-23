@@ -31,7 +31,7 @@ def load_data(database_filepath):
         OUTPUT: X(pandas dataframe) with message features
                 y(pandas dataframe) with message classification labels
     '''
-    engine = create_engine('sqlite:///DisasterResponse.db')
+    engine = create_engine('sqlite:///{}'.format(database_filepath))
     df = pd.read_sql("SELECT * FROM messages", engine)
     X = df.message.values #Extract messages
     y = df.iloc[:,4:] #Extract classification results 
