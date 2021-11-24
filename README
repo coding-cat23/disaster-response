@@ -42,7 +42,19 @@ Visualises data using plotly
 User  can enter a message that is classified by ML model and category is then output
 
 ## Instructions
-In the directory disaster-response\app , run the follwing command: 'python run.py'
+Step 1: Run the ETL script (clean data and store in a database):
+In the disaster-response\data directory run the following:
+python process_data.py messages.csv categories.csv DisasterResponse.db
+
+Step 2: Run the machine learning pipeline script (train the classifier and store pickle file):
+Note this may take some time
+In the disaster-response\models directory run the following:
+train_classifier.py ../data/DisasterResponse.db distaster_response_message_classifier.pkl
+
+Step 3: Open the web app in your browser
+In the disaster-response\app directiry, run the follwing command: 
+python run.py
+
 You should see an output: '* Running on http://0.0.0.0:3001/ (Press CTRL+C to quit)'
-Type 'localhost:3001/' into your web browser bar
+Type 'localhost:3001/' into your web browser bar, which will open the app
 
