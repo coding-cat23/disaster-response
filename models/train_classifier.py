@@ -79,7 +79,8 @@ def build_model():
     parameters = {
     'tfidf__use_idf': (True, False),
     'clf__estimator__random_state': [None,42],
-    'clf__estimator__solver':['liblinear','lbfgs']       
+    'clf__estimator__solver':['liblinear'],
+    'clf__estimator__penalty':['l1', 'l2']
 }
     #Fit a grid search model
     cv = GridSearchCV(logreg_pipeline, param_grid=parameters)
@@ -89,7 +90,7 @@ def build_model():
 
 
 
-def evaluate_model(model, X_test, Y_test, category_names):
+def evaluate_model(model, X_test, Y_test):
     '''
     Function to evaluate classification model
     INPUT:  model is a classification ML model
